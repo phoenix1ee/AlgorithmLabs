@@ -1,6 +1,6 @@
 #from manhattan.merge_sort import merge_sort
 import math
-from merge_sort import merge_sort
+from manhattan.merge_sort import merge_sort
 
 def Manhattan(P:list,m:int):
     """Calculate the manhattan distance of points in the input list P

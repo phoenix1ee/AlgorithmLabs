@@ -20,19 +20,20 @@ Output of the sorted numbers, with statistics will be written to an output file 
 ### Intruction to Run:
 
 ```commandline
-usage: __main__.py [-h] [-l] [-t {q1,q10,q50,q100,mo3,mg,nmgl}] [-a] n_file
+usage: __main__.py [-h] [-l] [-o] [-a] [-r [REPEAT]] n_file m
 
-use quicksort of different preference to sort numbers
+calculate manhattan distance and return closet m pairs
 
 positional arguments:
-  n_file                Input File Pathname containing the numbers to be sorted
+  n_file                Input File containing the coordinates
+  m                     No. of closet pairs needed
 
 options:
   -h, --help            show this help message and exit
-  -l                    Optional, for input file is a list of local files
-  -t {q1,q10,q50,q100,mo3,mg,nmgl}
-                        Optional choose of sorting strategy, default=mo3
-  -a                    Optional, include the analysis details in output
+  -l                    Optional, to support batch input by inputing a file containing list of local files
+  -o                    Optional, print the manhattan result list to file
+  -a                    Optional, print to include the analysis details in output
+  -r, --repeat          Optional, repeat manhattan process for certain times for accurate analysis
 
 ```
 

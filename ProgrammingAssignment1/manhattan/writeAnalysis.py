@@ -1,12 +1,4 @@
 from pathlib import Path
-import csv
-
-def coordinates(in_str:str):
-    delimiter=in_str.find(",")
-    if in_str[:delimiter].isnumeric and in_str[delimiter+1:].isnumeric:
-        return int(in_str[:delimiter]), int(in_str[delimiter+1:])
-    else:
-        return None
 
 
 def writeAnalysis(output_f, result):
