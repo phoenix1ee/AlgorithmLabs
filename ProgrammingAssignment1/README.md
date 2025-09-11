@@ -1,21 +1,19 @@
 # Shun Fai Lee Programming Assignment 1
 
-This python package is developed with Python and to be run with python interpreter 3.13.
+This python package is developed on and expected to be run in CLI with python interpreter 3.13.
 
-It accepted user input in the form of a text file containing numbers, or a file containing a list of files in the same executing directory
-and output to the same directory as the input file.
-
-It can also perform optional actions, including printing information of sort type, no. of comparison, no. of exchange, processing time(ns), with the appropriate argument input. 
+It accepted user input in the form of a text file containing lines of coordinates, or a file containing a list of full file path
+and output statistics to console and/or files to the same directory as the input file, by passing optional arguments. These information includes file names, data size, m size, processing time(ns) to console and repeat for multiple times optionally for better accuracy of statistics, with the appropriate argument input. 
 
 ## How to download and run:
 
 1. Download and install Python on your computer
 2. Navigate to [this](.) directory (containing the README.md)
-3. Run the program as a module: `python -m sorter -h`. This will print the help message.
-4. Run the program as a module (with real inputs): `python -m sorter <input_file> -`
-   a. IE: `python -m sorter file/number.txt`
+3. Run the program as a module: `python -m manhattan -h`. This will print the help message.
+4. Run the program as a module (with real inputs): `python -m manhattan <input_file> m`
+   a. IE: `python -m manhattan file/coordinates.txt 30 -o`
 
-Output of the sorted numbers, with statistics will be written to an output file with name echoing the input file after processing the input file.
+Output of the calculated and desired result will be written to a file named output_coordinates.txt at directory `file/`.
 
 ### Intruction to Run:
 
@@ -52,16 +50,22 @@ Usage statements:
 This project have a single module in a single package.
 Here is huffman package explained.
 
-* [PA1/](.): The parent package folder.
+* [ProgrammingAssignment1/](.): The parent package folder.
     * [README.md](README):
-      The guide for using this converter
-    * [sorter](sorter): 
+      The guide for using this manhattan distance module
+    * [manhattan](manhattan): 
       This is the *module* in this *package*.
-      * [`__init__.py`](PA1/__init__.py) xxx
-      * [`__main__.py`](PA1/__main__.py) 
-        This file is the entrypoint to the sorter when ran as a program. It handles the command line arguments and do all functions calling and output.
-      * `insertionsort.py` 
-        This the function to do an insertion sort on an input array and output it.
+      * [`__init__.py`](ProgrammingAssignment1/__init__.py) xxx
+      * [`__main__.py`](ProgrammingAssignment1/__main__.py) 
+        This file is the entrypoint to the manhattan module when ran as a program. It handles the command line arguments and do all functions calling and output.
+      * `manhattan.py` 
+        This is the core algorithm for the manhattan distance operations.
+      * `readPoints.py` 
+        This is the method to read input file.
+      * `writeAnalysis.py` 
+        This is the method to write statistics to output file.
+      * `writeResults.py` 
+        This is the method to write calculated manhattan distance results to output file.
 
 ## Input and Output format:
 
