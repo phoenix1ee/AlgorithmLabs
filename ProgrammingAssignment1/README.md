@@ -88,9 +88,9 @@ It will only print sorted numbers to output file if the input number file is wit
 
 ### Example input and output
 
->An example of sorter printout, with the default quicksort median of 3 sorting algorithm
+>An example of manhattan printout, with the -o -a paramenter
 > 
->From Input file : `line1:3 , line2: 1, , line3: 2`
+>From Input file : `line1:1,2 , line2: 3,1 , line3: 3,1 , line4: 4,4`
 > 
 >In Output file:
 > 

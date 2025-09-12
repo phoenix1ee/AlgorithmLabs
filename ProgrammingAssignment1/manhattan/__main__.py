@@ -39,28 +39,46 @@ if in_path.is_file():
     if not args.l:
         #read the points from file
         coordinate = readPoints(in_path)
-        #start calculation and time the process
+        #print analysis message if applicable
+        if analysis:
+            print("input list is:")
+            if len(coordinate)>10:
+                print(coordinate[i] for i in range(10))
+                print("only 1st 10 points are printed")
+            else:
+                print(coordinate)
+            print(f'Total number of points: {len(coordinate)}')
+            print("Start manhattan calculation.")
+        #start manhattan distance calculation and record the time consumed
         t_time = 0
         for i in range(args.repeat):
             start_time = time_ns()
-            result = Manhattan(coordinate,int(args.m))
+            result = Manhattan(coordinate,int(args.m),(analysis if i==0 else False))
             end_time = time_ns()
-            if analysis:
-                print(f"execution time of manhattan at trial {i}={"%.2f" % (end_time - start_time)}")
             t_time += end_time - start_time
         t_time = t_time//args.repeat
-        #write the result list to file
+        #print analysis dmessage if applicable
+        if analysis:
+            print(f'manhattan algorithm for the input list executed for {args.repeat} time.')
+            print(f'average execution time ={"%.2f" % t_time}')
+            print(f'Result of closet {args.m} pairs: ')
+            if len(result)>10:
+                for i in range(10):
+                    print(f'{result[i][0]} , {result[i][1]}')
+                print("only 1st 10 pairs are printed")
+            else:
+                for x in result:
+                    print(f'{x[0]} , {x[1]}')
+            print("statistics:")
+            print("file, data size, m size, processing time(ns)")
+            print(args.n_file, len(coordinate), args.m, "%.2f" % t_time, sep=",")
+        #write the result list to file if applicable
         if args.o:
             filename = str(in_path.name)
             out_path = str(in_path.absolute())
             out_pathdir = out_path[:len(out_path) - len(filename)]
             out_pathreal = Path(out_pathdir + "output_" + filename)
             writeResults(out_pathreal,result)
-        #return analysis data if applicable
-        if args.a:
-            print("processing statistics:")
-            print("file, data size, m size, processing time(ns)")
-            print(args.n_file, len(coordinate), args.m, "%.2f" % t_time, sep=",")
     else:
         filelist=[]
         with (in_path.open('r') as in_file):
