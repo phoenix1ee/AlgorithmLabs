@@ -22,11 +22,17 @@ this_parser.add_argument('-r','--repeat',type=int,nargs='?',const=1,default=1, h
 
 args = this_parser.parse_args()
 
-# Set the input and output file path
+# Set the input file path
 in_path = Path(args.n_file)
 
+# check for valid m value
 if not int(args.m):
     raise Exception(f'argument for m, {args.m}, is not valid, expect integer')
+
+# set trace output switch
+analysis = False
+if args.a:
+    analysis = not analysis
 
 if in_path.is_file():
     #start if input file exists
@@ -39,7 +45,8 @@ if in_path.is_file():
             start_time = time_ns()
             result = Manhattan(coordinate,int(args.m))
             end_time = time_ns()
-            print("%.2f" % (end_time - start_time))
+            if analysis:
+                print(f"execution time of manhattan at trial {i}={"%.2f" % (end_time - start_time)}")
             t_time += end_time - start_time
         t_time = t_time//args.repeat
         #write the result list to file

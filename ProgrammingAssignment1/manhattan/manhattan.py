@@ -2,13 +2,14 @@
 import math
 from manhattan.merge_sort import merge_sort
 
-def Manhattan(P:list,m:int):
+def Manhattan(P:list,m:int,analysis=False):
     """Calculate the manhattan distance of points in the input list P
     and output a list containing the closet m pairs of points.
 
 	Arguments:
 	P -- a list/array containing the points
 	m -- no. of closet points needed
+    analysis -- toggle printing of analysis message
 	"""
     n = len(P)
     combination = math.comb(n,2)
