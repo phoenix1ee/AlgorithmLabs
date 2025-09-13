@@ -126,8 +126,9 @@ if in_path.is_file():
                         print()
                     #write the result list to file
                     if args.o:
-                        childname = f_name[len(str(f_path.absolute().parent))+1:]
-                        out_pathreal = Path(str(f_path.absolute().parent)+"\\" + "output_" + childname)
+                        childname = "output_"+str(f_path.absolute())[len(str(f_path.absolute().parent))+1:]
+                        out_pathreal=f_path.absolute().parent.joinpath(childname)
+                        #out_pathreal = Path(str(f_path.absolute().parent)+"\\" + "output_" + childname)
                         writeResults(out_pathreal,result)
                 else:
                     print(f'{f_path.absolute()} in file list supplied do not exist')
