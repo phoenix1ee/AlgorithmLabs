@@ -1,5 +1,6 @@
 #from manhattan.merge_sort import merge_sort
 import math
+from time import time_ns
 from manhattan.merge_sort import merge_sort
 
 def Manhattan(P:list,m:int,analysis=False):
@@ -31,6 +32,7 @@ def Manhattan(P:list,m:int,analysis=False):
     #print intermediate result if applicable
     #This is not part of the algorithm, exist for analysis and trace purpose only
     #called when passed with "True" for "analysis"
+    mid_time = time_ns()
     if analysis:
         print(f"pairs of coordinates and manhattan distance: ")
         if len(Distance)>10:
@@ -44,7 +46,7 @@ def Manhattan(P:list,m:int,analysis=False):
     merge_sort(Distance,0)
     #extract the 1st m nos. of pairs and return
     Result = [item[:2] for item in Distance[:m]]
-    return Result
+    return Result , mid_time
 
 
 # Testing

@@ -43,20 +43,24 @@ if in_path.is_file():
         if analysis:
             print("input list is:")
             if len(coordinate)>10:
-                print(coordinate[i] for i in range(10))
+                print(coordinate[:10])
                 print("only 1st 10 points are printed")
             else:
                 print(coordinate)
             print(f'Total number of points: {len(coordinate)}')
             print("Start manhattan calculation.")
         #start manhattan distance calculation and record the time consumed
-        t_time = 0
+        part1_time = 0
+        part2_time = 0
         for i in range(args.repeat):
             start_time = time_ns()
-            result = Manhattan(coordinate,int(args.m),(analysis if i==0 else False))
+            result, mid_time = Manhattan(coordinate,int(args.m),(analysis if i==0 else False))
             end_time = time_ns()
-            t_time += end_time - start_time
-        t_time = t_time//args.repeat
+            part1_time += mid_time - start_time
+            part2_time += end_time - mid_time
+        part1_time = part1_time//args.repeat
+        part2_time = part2_time//args.repeat
+        t_time = part1_time+part2_time
         #print analysis dmessage if applicable
         if analysis:
             print(f'manhattan algorithm for the input list executed for {args.repeat} time.')
@@ -70,8 +74,8 @@ if in_path.is_file():
                 for x in result:
                     print(f'{x[0]} , {x[1]}')
             print("statistics:")
-            print("file, data size, m size, processing time(ns)")
-            print(args.n_file, len(coordinate), args.m, "%.2f" % t_time, sep=",")
+            print("file, data size, m size, part1 processing time(ns), part2 processing time(ns)")
+            print(args.n_file, len(coordinate), args.m, "%.2f" % part1_time, "%.2f" % part2_time, sep=",")
         #write the result list to file if applicable
         if args.o:
             filename = str(in_path.name)
@@ -96,21 +100,25 @@ if in_path.is_file():
                     if analysis:
                         print("input list is:")
                         if len(coordinate)>10:
-                            print(coordinate[i] for i in range(10))
+                            print(coordinate[:10])
                             print("only 1st 10 points are printed")
                         else:
                             print(coordinate)
                         print(f'Total number of points: {len(coordinate)}')
                         print("Start manhattan calculation.")
                     #start calculation and time the process
-                    t_time = 0
+                    part1_time = 0
+                    part2_time = 0
                     for i in range(args.repeat):
                         start_time = time_ns()
-                        result = Manhattan(coordinate,int(args.m),(analysis if i==0 else False))
+                        result, mid_time = Manhattan(coordinate,int(args.m),(analysis if i==0 else False))
                         end_time = time_ns()
-                        t_time += end_time - start_time
-                    t_time = t_time//args.repeat
-                            #print analysis dmessage if applicable
+                        part1_time += mid_time - start_time
+                        part2_time += end_time - mid_time
+                    part1_time = part1_time//args.repeat
+                    part2_time = part2_time//args.repeat
+                    t_time = part1_time+part2_time
+                    #print analysis message if applicable
                     if analysis:
                         print(f'manhattan algorithm for the input list executed for {args.repeat} time.')
                         print(f'average execution time ={"%.2f" % t_time}ns')
@@ -122,7 +130,7 @@ if in_path.is_file():
                         else:
                             for x in result:
                                 print(f'{x[0]} , {x[1]}')
-                        stat_msg.append([f_name,len(coordinate),args.m,"%.2f" % t_time])
+                        stat_msg.append([f_name,len(coordinate),args.m,"%.2f" % part1_time,"%.2f" % part2_time])
                         print()
                     #write the result list to file
                     if args.o:
@@ -133,7 +141,7 @@ if in_path.is_file():
                 else:
                     print(f'{f_path.absolute()} in file list supplied do not exist')
             print("statistics:")
-            print("file, data size, m size, processing time(ns)")
+            print("file, data size, m size, part1 processing time(ns), part2 processing time(ns)")
             for x in stat_msg:
                 print(x)
             print()
