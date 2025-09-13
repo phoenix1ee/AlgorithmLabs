@@ -11,11 +11,16 @@ def Manhattan(P:list,m:int,analysis=False):
 	m -- no. of closet points needed
     analysis -- boolena to toggle printing of analysis message
 	"""
+    #find the length of input array
     n = len(P)
+    #calculate no. of combinations or pairs
     combination = math.comb(n,2)
+    #declare empty array
     Distance = list()
+    #initialize counter and keys
     counter = 0
     key = 0
+    #calculate manhattan distance for each pairs of coordinates
     while key < n-1:
         for i in range(key+1, n):
             temp = abs(P[key][0]-P[i][0])+abs(P[key][1]-P[i][1])
@@ -31,11 +36,13 @@ def Manhattan(P:list,m:int,analysis=False):
         if len(Distance)>10:
             for i in range(10):
                 print(f'{Distance[i][0]} , {Distance[i][1]} , {Distance[i][2]}')
-                print("only 1st 10 pairs and manhattan distance are printed")
+            print("only 1st 10 pairs and manhattan distance are printed")
         else:
             for x in Distance:
                 print(f'{x[0]} , {x[1]} , {x[2]}')
+    #call CLRS page 39 merge-sort, modified for the data structure
     merge_sort(Distance,0)
+    #extract the 1st m nos. of pairs and return
     Result = [item[:2] for item in Distance[:m]]
     return Result
 

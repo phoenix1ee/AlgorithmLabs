@@ -60,7 +60,7 @@ if in_path.is_file():
         #print analysis dmessage if applicable
         if analysis:
             print(f'manhattan algorithm for the input list executed for {args.repeat} time.')
-            print(f'average execution time ={"%.2f" % t_time}')
+            print(f'average execution time ={"%.2f" % t_time}ns')
             print(f'Result of closet {args.m} pairs: ')
             if len(result)>10:
                 for i in range(10):
@@ -86,32 +86,55 @@ if in_path.is_file():
                 line_s = line.strip().replace(" ", "")
                 if line_s:
                     filelist.append(line_s)
-            if args.a:
-                print("processing statistics:")
-                print("file, data size, m size, processing time(ns)")
+            stat_msg = list()
             for f_name in filelist:
                 f_path = Path(f_name)
-                print(f_path.absolute())
                 if f_path.is_file():
                     #read the points from file
                     coordinate = readPoints(f_path)
+                    #print analysis message if applicable
+                    if analysis:
+                        print("input list is:")
+                        if len(coordinate)>10:
+                            print(coordinate[i] for i in range(10))
+                            print("only 1st 10 points are printed")
+                        else:
+                            print(coordinate)
+                        print(f'Total number of points: {len(coordinate)}')
+                        print("Start manhattan calculation.")
                     #start calculation and time the process
                     t_time = 0
                     for i in range(args.repeat):
                         start_time = time_ns()
-                        result = Manhattan(coordinate,int(args.m))
+                        result = Manhattan(coordinate,int(args.m),(analysis if i==0 else False))
                         end_time = time_ns()
-                        print("%.2f" % (end_time - start_time))
                         t_time += end_time - start_time
                     t_time = t_time//args.repeat
+                            #print analysis dmessage if applicable
+                    if analysis:
+                        print(f'manhattan algorithm for the input list executed for {args.repeat} time.')
+                        print(f'average execution time ={"%.2f" % t_time}ns')
+                        print(f'Result of closet {args.m} pairs: ')
+                        if len(result)>10:
+                            for i in range(10):
+                                print(f'{result[i][0]} , {result[i][1]}')
+                            print("only 1st 10 pairs are printed")
+                        else:
+                            for x in result:
+                                print(f'{x[0]} , {x[1]}')
+                        stat_msg.append([f_name,len(coordinate),args.m,"%.2f" % t_time])
+                        print()
                     #write the result list to file
                     if args.o:
                         childname = f_name[len(str(f_path.absolute().parent))+1:]
                         out_pathreal = Path(str(f_path.absolute().parent)+"\\" + "output_" + childname)
                         writeResults(out_pathreal,result)
-                    if args.a:
-                        print(childname, len(coordinate), args.m, "%.2f" % t_time, sep=",")
                 else:
                     print(f'{f_path.absolute()} in file list supplied do not exist')
+            print("statistics:")
+            print("file, data size, m size, processing time(ns)")
+            for x in stat_msg:
+                print(x)
+            print()
 else:
     raise Exception(f'input file in {in_path.absolute()} do not exist')
