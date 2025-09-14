@@ -1,4 +1,3 @@
-#from manhattan.merge_sort import merge_sort
 import math
 from time import time_ns
 from manhattan.merge_sort import merge_sort

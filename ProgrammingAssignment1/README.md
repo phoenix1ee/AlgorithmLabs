@@ -1,16 +1,16 @@
 # Shun Fai Lee Programming Assignment 1
 
-This python package is developed on and expected to be run in CLI with python interpreter 3.13.
+This python package is developed on and expected to be run in CLI with python interpreter 3.12 or above.
 
 It accepted user input in the form of a text file containing lines of coordinates, or a file containing a list of full file path
-and output statistics to console and/or outputing result list, to the same directory as the input file, by passing optional arguments. Statistics information includes file names, data size, m size, processing time(ns). The module also support to repeat for multiple times optionally for better accuracy of statistics, with the appropriate argument input. 
+and output statistics to console and/or outputing result list, to the same directory as the input file, by passing optional arguments. Statistics information includes file names, data size, m size, processing time(ns). The module also support to repeat for multiple times optionally for better accuracy of statistics, with the appropriate argument passed. 
 
 ## How to download and run:
 
 1. Download and install Python on your computer
 2. Navigate to [this](.) directory (containing the README.md)
 3. Run the program as a module: `python -m manhattan -h`. This will print the help message.
-4. Run the program as a module (with real inputs): `python -m manhattan <input_file> m`
+4. Run the program as a module (with real inputs): `python -m manhattan <input_file> <m>`
 
    a. IE: `python -m manhattan file/coordinates.txt 30 -o`
 
@@ -41,7 +41,7 @@ Usage statements:
 | Symbol | Meaning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 |--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [h]    | variable h is optional. It display the helper message                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| [l]    | variable l is optional. It will tell program that input file is a list of files to be sorted                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| [l]    | variable l is optional. It will tell program that input file is a list of files                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | [m]    | variable m is compulsory. It is the number of pairs of coordinates you want.                                                                                                                                                                                                                                                                                                                                                                              |
 | [a]    | variable a is optional. It will ask the program to print out input, output and intermediate statistics of the algorithm for user's reference                                                                                                                                                                                                                                                                                                                                                                                                     |
 | [o]    | variable o is optional. It will ask the program to write the result list of closet pairs to output file  |
@@ -67,7 +67,8 @@ Here is huffman package explained.
         This is the CLRS page 39 merge-sort.
       * `writeResults.py` 
         This is the method to write calculated manhattan distance results to output file.
-
+      * `manhattan_improvement.py` 
+        This is the improved core algorithm for the manhattan distance operations. It is not included in the main program but is for standalone execution for testing purpose.
 
 ## Example input and output
 
