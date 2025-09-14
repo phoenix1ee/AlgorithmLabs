@@ -9,7 +9,6 @@ from time import time_ns
 from manhattan.readPoints import readPoints
 from manhattan.writeResults import writeResults
 from manhattan.manhattan import Manhattan
-from manhattan.writeAnalysis import writeAnalysis
 
 # use the Argument parser to define compulsory and optional arguments
 this_parser = argparse.ArgumentParser(description ='calculate manhattan distance and return closet m pairs')
