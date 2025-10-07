@@ -16,7 +16,7 @@ def writeResults(output_f, result):
     
 # Testing
 if __name__ == "__main__":
-    test1=[[[1, 2], [1, 3]], [[1, 2], [3, 1]], [[1, 3], [3, 1]], [[1, 3], [4, 4]]]
-    outpath = Path('ProgrammingAssignment1\input\whiteBox1_output.txt')
-    writeResults(outpath,test1)
+    testwrite=[[[1, 2], [1, 3]], [[1, 2], [3, 1]], [[1, 3], [3, 1]], [[1, 3], [4, 4]]]
+    outpath = Path('ProgrammingAssignment1\datafile\output_testwrite.txt')
+    writeResults(outpath,testwrite)
     

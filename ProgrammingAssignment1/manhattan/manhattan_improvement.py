@@ -65,7 +65,7 @@ def Manhattan(P:list,m:int,analysis=False):
 
 # Testing
 if __name__ == "__main__":
-    infile = Path('datafile/rand6400.txt')
+    infile = Path('datafile/blackBox6400.txt')
     coordinates=readPoints(infile)
     m = 8000
     start_time = time_ns()
