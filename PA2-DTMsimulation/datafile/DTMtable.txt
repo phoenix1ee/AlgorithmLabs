@@ -1,0 +1,13 @@
+state,symbol,nstate,nsymbol,move
+q0,0,q0,0,1
+q0,1,q0,1,1
+q0,b,q1,b,-1
+q1,0,q2,b,-1
+q1,1,q3,b,-1
+q1,b,qN,b,-1
+q2,0,qY,b,-1
+q2,1,qN,b,-1
+q2,b,qN,b,-1
+q3,0,qN,b,-1
+q3,1,qN,b,-1
+q3,b,qN,b,-1
