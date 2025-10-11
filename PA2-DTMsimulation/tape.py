@@ -5,13 +5,14 @@ class cell:
         self.next = None
 
 class tape:
+    """implement an infinite tape"""
     def __init__(self, key=""):
-        self.c = cell()
+        self.start = cell()
         self.__build__(key)
-        self.now = self.c
+        self.now = self.start
         
     def __build__(self,key):
-        temp = self.c
+        temp = self.start
         for x in key:
             temp.v=x
             temp.next=cell()
@@ -30,7 +31,15 @@ class tape:
             if not self.now.prev:
                 self.now.prev = cell()   
             self.now = self.now.prev
-
+    
+    def print(self):
+        """print all ever used cell from start"""
+        temp = self.start
+        s = ""
+        while temp and temp.next:
+            s = s+temp.v
+            temp = temp.next
+        return s
 
 # Testing
 if __name__ == "__main__":

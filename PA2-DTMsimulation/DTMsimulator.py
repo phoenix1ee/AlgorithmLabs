@@ -1,53 +1,22 @@
 from sys import setrecursionlimit
 setrecursionlimit(30000)
 
+from readDTM import readDTM
 from pathlib import Path
 import argparse
-import csv
+from tape import tape
 
-def readDTM(in_path):
-    """
-    read input file containing DTM table 
-    example header:state,symbol,nstate,nsymbol,move
-    example line:q0,0,q0,0,1
-    convert and output a dict input data
-    :param in_path :a file object which contain DTM table
-    :return: the dict of input data
-    """
-    DTM = dict()
-    with open(in_path, mode='r', encoding='utf-8', newline='') as file:
-        reader = csv.DictReader(file, delimiter=',')  # Change delimiter if needed
-        #print(reader.fieldnames)
-        #x=1
-        for row in reader:
-            if row['state'] in DTM:
-                # add the transition content to DTM dict
-                #print(f'row {x}  {row['nstate']},{row['nsymbol']},{row['move']}')
-                DTM[row['state']].update({row['symbol']:(row['nstate'],row['nsymbol'],row['move'])})
-                #print(DTM[row['state']])
-            else:
-                # update the key for state 1st
-                #print(f'row {x}  {row['nstate']},{row['nsymbol']},{row['move']}')
-                DTM.update({row['state']:{row['symbol']:(row['nstate'],row['nsymbol'],row['move'])}})
-                #print(DTM[row['state']])
-            #x+=1
-    return DTM
-
-def replace(in_str,index,char):
-    return in_str[:index]+char+in_str[index+1:]
-
-def DTMsimulate(DTM,in_str)->bool:
-    tape = in_str[:]
+def DTMsimulate(DTM,in_tape:tape)->bool:
     currentstate="q0"
-    currentindex = 0
     round = 1
     while currentstate not in ("qY","qN"):
-        currentsymbol = tape[currentindex]
-        tape = replace(tape, currentindex, DTM[currentstate][currentsymbol][1])
-        currentindex = currentindex + int(DTM[currentstate][currentsymbol][2])
+        currentsymbol = in_tape.now.v
+        in_tape.write(DTM[currentstate][currentsymbol][1])
+        in_tape.move(int(DTM[currentstate][currentsymbol][2]))
         currentstate = DTM[currentstate][currentsymbol][0]
-        print(f"round{round}: tape: {tape}, next tape position: {currentindex+1}")
+        print(f"round{round}: tape: {in_tape.print()}")
         round+=1
+    print(f"final state: {in_tape.print()}")
     return True if currentstate == "qY" else False
 
 
@@ -67,6 +36,5 @@ if __name__ == "__main__":
         DTM = readDTM(in_path)
     else:
         raise Exception(f'input file in {in_path.absolute()} do not exist')
-    test = "000b"
+    test = tape("111000")
     print(DTMsimulate(DTM,test))
-    print(test)
