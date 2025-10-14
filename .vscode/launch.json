@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "name": "DTMsimulatorDebug",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "DTMsimulator",
+            "cwd": "${workspaceFolder}\\PA2-DTMsimulation",
+            "args": [".\\datafile\\BinaryMul.csv", "111m11"],  // optional
+            "console": "integratedTerminal"
+        }
+    ]
+}

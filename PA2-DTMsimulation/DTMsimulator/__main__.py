@@ -32,7 +32,7 @@ if in_path.is_file():
         filename = str(in_path.name)
         out_path = str(in_path.absolute())
         out_pathdir = out_path[:len(out_path) - len(filename)]
-        out_pathreal = Path(out_pathdir + "output")
+        out_pathreal = Path(out_pathdir + "output.txt")
         with (out_pathreal.open('w') as file):
             for x in transition:
                 file.write(str(x))

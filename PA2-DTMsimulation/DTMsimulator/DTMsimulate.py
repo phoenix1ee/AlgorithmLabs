@@ -6,12 +6,18 @@ from DTMsimulator.tape import tape
 from DTMsimulator.readDTM import readDTM
 
 def DTMsimulate(DTM,in_tape:tape):
-    currentstate="q0"
     round = 0
     tapestate = list()
+    Q = list(DTM)
+    Gamma = list(DTM[Q[0]].keys())
+    currentstate=Q[0]
     while currentstate not in ("qY","qN"):
+        #print(f"current state: {currentstate}")
         #read tape
         currentsymbol = in_tape.now.v
+        #print(f"current symbol: {currentsymbol}")
+        if currentsymbol not in Gamma:
+            currentsymbol = 'b'
         #write to tape
         in_tape.write(DTM[currentstate][currentsymbol][1])
         #print current tape state
