@@ -1,6 +1,4 @@
-from pathlib import Path
-import csv
-from Markov.matrixClass import matrix
+from matrixClass import matrix
 def readMatrix(in_path):
     """
     read input matrix in csv format
@@ -63,7 +61,6 @@ def scalarMul(A:matrix,k=float):
             product[i].append(A.matrix[i][j]*k)
     return matrix(product)
 
-
 def mmul(A:matrix,B:matrix):
     """
     read 2 input matrix object
@@ -82,7 +79,6 @@ def mmul(A:matrix,B:matrix):
     else:
         raise Exception(f' matrix dimension mismatch when doing multiplication')
 
-
 def partition(A:matrix, k:int):
     """
     read matrix object, a range, denoted by k
@@ -100,17 +96,17 @@ def partition(A:matrix, k:int):
 
 # Testing
 if __name__ == "__main__":
-    inpath = Path('Markov/matrix1.txt')
-    #inpath = Path('matrix1.txt')
-    temp=readMatrix(inpath)
-    temp2 = temp.copy()
-    for x in temp:
-        print(x)
+    test = list()
+    test.append([1.1, 2.3, 3.4])
+    test.append([4.0, 5.0, 6.7])
+    test.append([7.7, 8.8, 9.9])
+    temp = matrix(test)
+    temp.mprint()
     #print("row1xrow3")
     #print(vectMul(temp[0],temp[2]))
     #Idm = Imatrix(3)
     #for x in Idm:
     #    print(x)
     #product = mmul(matrix(temp),matrix(temp2))
-    product = scalarMul(temp,3.5)
-    product.mprint()
+    new = partition(temp,2)
+    new.mprint()

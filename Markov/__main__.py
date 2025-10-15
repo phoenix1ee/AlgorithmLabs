@@ -5,7 +5,7 @@ setrecursionlimit(30000)
 
 from pathlib import Path
 import argparse
-from Markov.helperFunc import readMatrix
+from Markov.helperFunc import readMatrix , vectMul , Imatrix , mmul, madd, msub, scalarMul, partition
 from Markov.matrixClass import matrix
 
 # use the Argument parser to define compulsory and optional arguments
@@ -21,15 +21,16 @@ if in_path.is_file():
     print(f'read Matrix specification from {in_path}')
     in_matrix = matrix(readMatrix(in_path))
     in_matrix.mprint()
+    in2 = matrix(in_matrix.matrix.copy())
     filename = str(in_path.name)
     out_path = str(in_path.absolute())
     out_pathdir = out_path[:len(out_path) - len(filename)]
     out_pathreal = Path(out_pathdir + "output.txt")
     #result of markov chain process
     # set as input matrix for now
-    output = in_matrix.matrix
+    output = mmul(in_matrix,in2)
     with (out_pathreal.open('w') as file):
-        for x in output:
+        for x in output.matrix:
             file.write(str(x))
             file.write("\n")
 else:
