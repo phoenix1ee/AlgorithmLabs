@@ -1,6 +1,6 @@
 import csv
-import copy
 from pathlib import Path
+import argparse
 
 def readMatrix(in_path):
     """
@@ -94,54 +94,34 @@ def partition(A:list, i:int, ii:int, j:int, jj:int):
     :param jj: end col
     :return: a matrix list
     """
-    return([x[slice(j,jj)] for x in A[slice(i,ii)]])
+    return([x[j:jj+1] for x in A[i:ii+1]])
 
-# Testing
-if __name__ == "__main__":
-    inpath = Path('MarkovExample.csv')
-    #inpath = Path('matrix1.txt')
-    temp=readMatrix(inpath)
-    mprint(temp)
-    print()
-    temp2 = copy.deepcopy(temp)
-    """
-    test = list()
-    test.append([1.1, 2.3, 3.4])
-    test.append([4.0, 5.0, 6.7])
-    test.append([7.7, 8.8, 9.9])
-    test2 = test.copy()
-    mprint(test)
-    print()
-    print(GetCol(test,2))
-    print()
-    print(vectMul(test[0],GetCol(test,2)))
-    print()
-    mprint(Imatrix(3))
-    print()
-    mprint(mmul(test,test2))
-    print()
-    mprint(madd(test,test2))
-    print()
-    mprint(msub(test,test2))
-    print()
-    mprint(scalarMul(test,2))
-    print()
-    mprint(partition(test2,1,2,1,2))
-    """
-    #reduction
-    W = dict()
-    R = dict()
-    Q = dict()
-    #while len(temp)>2:
-    #mprint(partition(temp,-1,None,0,-1))
-    W.update({len(temp):partition(temp,0,-1,-1,None)})
-    R.update({len(temp):partition(temp,-1,None,0,-1)})
-    #R.update({len(temp):[temp[-1][:-1]]})
-    Q.update({len(temp):temp[-1][-1]})
-    print(W)
-    print(R)
-    print(Q)
-    mprint(mmul(W[len(temp)],R[len(temp)]))
-        #temp = madd(partition(temp,0,-2,0,-2),mmul(scalarMul(W[len(temp)],Q[len(temp)]),R[len(temp)]))
+# use the Argument parser to define compulsory and optional arguments
+this_parser = argparse.ArgumentParser(description ='Find Markov Chain state probability: csv file represeting input state matrix')
+this_parser.add_argument('n_file', type=str, help="Input File containing the matrix")
 
-        
+args = this_parser.parse_args()
+
+# Set the input file path
+in_path = Path(args.n_file)
+
+if in_path.is_file():
+    print(f'read Matrix specification from {in_path}')
+    in_matrix = readMatrix(in_path)
+    mprint(in_matrix)
+    
+    
+
+    filename = str(in_path.name)
+    out_path = str(in_path.absolute())
+    out_pathdir = out_path[:len(out_path) - len(filename)]
+    out_pathreal = Path(out_pathdir + "output.txt")
+    #result of markov chain process
+    # set as input matrix for now
+    output = mmul(in_matrix,in2)
+    with (out_pathreal.open('w') as file):
+        for x in output.matrix:
+            file.write(str(x))
+            file.write("\n")
+else:
+    raise Exception(f'input file in {in_path.absolute()} do not exist')

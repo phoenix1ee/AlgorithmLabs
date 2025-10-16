@@ -5,8 +5,7 @@ setrecursionlimit(30000)
 
 from pathlib import Path
 import argparse
-from Markov.helperFunc import readMatrix , vectMul , Imatrix , mmul, madd, msub, scalarMul, partition
-from Markov.matrixClass import matrix
+from Markov.helperFuncWithClass import 
 
 # use the Argument parser to define compulsory and optional arguments
 this_parser = argparse.ArgumentParser(description ='Simulate a DTM with input: csv file represeting DTM and test string')
