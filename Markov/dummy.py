@@ -98,9 +98,10 @@ def partition(A:list, i:int, ii:int, j:int, jj:int):
 
 # Testing
 if __name__ == "__main__":
-    inpath = Path('MarkovExample.csv')
+    inpath = Path('markovExample.csv')
     #inpath = Path('matrix1.txt')
     temp=readMatrix(inpath)
+    size = len(temp)
     mprint(temp)
     print()
     temp2 = copy.deepcopy(temp)
@@ -132,16 +133,19 @@ if __name__ == "__main__":
     W = dict()
     R = dict()
     Q = dict()
-    #while len(temp)>2:
-    #mprint(partition(temp,-1,None,0,-1))
-    W.update({len(temp):partition(temp,0,-1,-1,None)})
-    R.update({len(temp):partition(temp,-1,None,0,-1)})
-    #R.update({len(temp):[temp[-1][:-1]]})
-    Q.update({len(temp):temp[-1][-1]})
-    print(W)
-    print(R)
-    print(Q)
-    mprint(mmul(W[len(temp)],R[len(temp)]))
-        #temp = madd(partition(temp,0,-2,0,-2),mmul(scalarMul(W[len(temp)],Q[len(temp)]),R[len(temp)]))
+    while len(temp)>2:
+        W.update({len(temp):partition(temp,0,-1,-1,None)})
+        R.update({len(temp):partition(temp,-1,None,0,-1)})
+        Q.update({len(temp):temp[-1][-1]})
+        T = partition(temp,0,-1,0,-1)
+        print(W)
+        print(R)
+        print(Q)
+        IQ = 1/(1-Q[len(temp)])
+        temp = madd(mmul(scalarMul(W[len(temp)],IQ),R[len(temp)]),T)
+    mprint(temp)
+    #enlargement
 
-        
+    k = [1]
+    for i in range(2,size+1):
+        print(i)
