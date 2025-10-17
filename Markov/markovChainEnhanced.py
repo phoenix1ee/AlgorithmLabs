@@ -127,12 +127,11 @@ if in_path.is_file():
         T = partition(temp,0,-1,0,-1)
         IQ = 1/(1-Q[len(temp)])
         temp = madd(mmul(scalarMul(W[len(temp)],IQ),R[len(temp)]),T)
-        if len(temp)>1:
-            print(f"P{len(temp)}:")
-            output.append(f"P{len(temp)}:")
-            mprint(temp)
-            for x in temp:
-                output.append(x)
+        print(f"P{len(temp)}:")
+        output.append(f"P{len(temp)}:")
+        mprint(temp)
+        for x in temp:
+            output.append(x)
     #enlargement
     print("matrix enlargement: ")
     output.append("matrix enlargement: ")

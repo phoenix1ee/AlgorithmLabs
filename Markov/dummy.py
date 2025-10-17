@@ -1,5 +1,4 @@
 import csv
-import copy
 from pathlib import Path
 
 def readMatrix(in_path):
@@ -96,56 +95,51 @@ def partition(A:list, i:int, ii:int, j:int, jj:int):
     """
     return([x[slice(j,jj)] for x in A[slice(i,ii)]])
 
-# Testing
+def inverse2x2(A:list):
+    deter = A[0][0]*A[1][1]-A[0][1]*A[1][0]
+    output = [[A[1][1],-A[0][1]],[-A[1][0],A[0][0]]]
+    return scalarMul(output,deter)
+
+# direct run
 if __name__ == "__main__":
+    t = [[4,3],[3,2]]
+    mprint(inverse2x2(t))
+    """
     inpath = Path('markovExample.csv')
     #inpath = Path('matrix1.txt')
     temp=readMatrix(inpath)
     size = len(temp)
+    print("input matrix is:")
     mprint(temp)
-    print()
-    temp2 = copy.deepcopy(temp)
-    """
-    test = list()
-    test.append([1.1, 2.3, 3.4])
-    test.append([4.0, 5.0, 6.7])
-    test.append([7.7, 8.8, 9.9])
-    test2 = test.copy()
-    mprint(test)
-    print()
-    print(GetCol(test,2))
-    print()
-    print(vectMul(test[0],GetCol(test,2)))
-    print()
-    mprint(Imatrix(3))
-    print()
-    mprint(mmul(test,test2))
-    print()
-    mprint(madd(test,test2))
-    print()
-    mprint(msub(test,test2))
-    print()
-    mprint(scalarMul(test,2))
-    print()
-    mprint(partition(test2,1,2,1,2))
-    """
+    print("Matrix Reduction Process:")
     #reduction
     W = dict()
     R = dict()
     Q = dict()
-    while len(temp)>2:
+    while len(temp)>1:
         W.update({len(temp):partition(temp,0,-1,-1,None)})
         R.update({len(temp):partition(temp,-1,None,0,-1)})
         Q.update({len(temp):temp[-1][-1]})
         T = partition(temp,0,-1,0,-1)
-        print(W)
-        print(R)
-        print(Q)
         IQ = 1/(1-Q[len(temp)])
         temp = madd(mmul(scalarMul(W[len(temp)],IQ),R[len(temp)]),T)
-    mprint(temp)
+        print(f"P{len(temp)}:")
+        mprint(temp)
     #enlargement
-
+    print("matrix enlargement: ")
     k = [1]
-    for i in range(2,size+1):
-        print(i)
+    for i in range(1,size):
+        n = i+1
+        temp = 1/(1-Q[n])*vectMul(k,GetCol(W[n],-1))
+        k.append(temp)
+        print(f"k{n}={temp}")
+    alpha1 = 0
+    for x in k:
+        alpha1+=x
+    alpha1=1/alpha1
+    print(f"alpha1={alpha1}")
+    alpha = [x*alpha1 for x in k]
+    alpha2dp = [round(x,3) for x in alpha]
+    print("steady state probability with 3 decimal points:")
+    print(alpha2dp)
+    """
