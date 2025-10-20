@@ -98,48 +98,58 @@ def partition(A:list, i:int, ii:int, j:int, jj:int):
 def inverse2x2(A:list):
     deter = A[0][0]*A[1][1]-A[0][1]*A[1][0]
     output = [[A[1][1],-A[0][1]],[-A[1][0],A[0][0]]]
-    return scalarMul(output,deter)
+    return scalarMul(output,1/deter)
 
 # direct run
 if __name__ == "__main__":
-    t = [[4,3],[3,2]]
-    mprint(inverse2x2(t))
-    """
-    inpath = Path('markovExample.csv')
-    #inpath = Path('matrix1.txt')
-    temp=readMatrix(inpath)
+    in_path = "markovExample.csv"
+    output = list()
+    temp=readMatrix(in_path)
     size = len(temp)
     print("input matrix is:")
+    output.append("input matrix is:")
     mprint(temp)
+    for x in temp:
+        output.append(x)
     print("Matrix Reduction Process:")
+    output.append("Matrix Reduction Process:")
     #reduction
     W = dict()
     R = dict()
     Q = dict()
-    while len(temp)>1:
-        W.update({len(temp):partition(temp,0,-1,-1,None)})
-        R.update({len(temp):partition(temp,-1,None,0,-1)})
-        Q.update({len(temp):temp[-1][-1]})
-        T = partition(temp,0,-1,0,-1)
-        IQ = 1/(1-Q[len(temp)])
-        temp = madd(mmul(scalarMul(W[len(temp)],IQ),R[len(temp)]),T)
+    while len(temp)>2:
+        r = len(temp)
+        W.update({r:partition(temp,0,-2,-2,None)})
+        R.update({r:partition(temp,-2,None,0,-2)})
+        Q.update({r:partition(temp,-2,None,-2,None)})
+        T = partition(temp,0,-2,0,-2)
+        IQ = inverse2x2(msub(Imatrix(2),Q[r]))
+        temp = madd(mmul(mmul(W[r],IQ),R[r]),T)
         print(f"P{len(temp)}:")
+        output.append(f"P{len(temp)}:")
         mprint(temp)
+        for x in temp:
+            output.append(x)
+    
     #enlargement
     print("matrix enlargement: ")
+    output.append("matrix enlargement: ")
     k = [1]
-    for i in range(1,size):
-        n = i+1
-        temp = 1/(1-Q[n])*vectMul(k,GetCol(W[n],-1))
-        k.append(temp)
-        print(f"k{n}={temp}")
-    alpha1 = 0
-    for x in k:
-        alpha1+=x
-    alpha1=1/alpha1
-    print(f"alpha1={alpha1}")
-    alpha = [x*alpha1 for x in k]
-    alpha2dp = [round(x,3) for x in alpha]
-    print("steady state probability with 3 decimal points:")
-    print(alpha2dp)
-    """
+    #set next k
+    nextk = 3
+    #ending matrix is 2x2:
+    if len(temp)==2:
+        k2 = 1/(1-temp[1][1])*temp[0][1]
+        k.append(k2)
+        print(f"k2={k2}")
+        output.append(f"k2={k2}")
+        print(k)
+        nextk +=1
+
+    for n in range(nextk,size+1,2):
+        kr = mmul(mmul([k],W[n]),inverse2x2(msub(Imatrix(2),Q[n])))
+        for x in kr[0]:
+            k.append(x)
+        print(f"k:{k}")
+
+    

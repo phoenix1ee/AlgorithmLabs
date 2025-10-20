@@ -97,7 +97,7 @@ def partition(A:list, i:int, ii:int, j:int, jj:int):
     return([x[slice(j,jj)] for x in A[slice(i,ii)]])
 
 # use the Argument parser to define compulsory and optional arguments
-this_parser = argparse.ArgumentParser(description ='Find Markov Chain state probability: csv file represeting input state matrix')
+this_parser = argparse.ArgumentParser(description ='Find Markov Chain state probability: input csv file represeting input state matrix')
 this_parser.add_argument('n_file', type=str, help="Input File containing the matrix")
 this_parser.add_argument('-o', action='store_true', help="Optional, print the operation result to file")
 args = this_parser.parse_args()

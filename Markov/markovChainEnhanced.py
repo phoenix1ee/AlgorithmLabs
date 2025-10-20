@@ -99,10 +99,10 @@ def partition(A:list, i:int, ii:int, j:int, jj:int):
 def inverse2x2(A:list):
     deter = A[0][0]*A[1][1]-A[0][1]*A[1][0]
     output = [[A[1][1],-A[0][1]],[-A[1][0],A[0][0]]]
-    return scalarMul(output,deter)
+    return scalarMul(output,1/deter)
 
 # use the Argument parser to define compulsory and optional arguments
-this_parser = argparse.ArgumentParser(description ='Find Markov Chain state probability: csv file represeting input state matrix')
+this_parser = argparse.ArgumentParser(description ='Find Markov Chain state probability: input an csv file represeting input state matrix')
 this_parser.add_argument('n_file', type=str, help="Input File containing the matrix")
 this_parser.add_argument('-o', action='store_true', help="Optional, print the operation result to file")
 args = this_parser.parse_args()
@@ -143,19 +143,24 @@ if in_path.is_file():
     print("matrix enlargement: ")
     output.append("matrix enlargement: ")
     k = [1]
-    #ending matrix is 2x2:
+    #set next k
+    nextk = 3
+    #ending matrix is 2x2, compute k2 separately:
     if len(temp)==2:
         k2 = 1/(1-temp[1][1])*temp[0][1]
         k.append(k2)
         print(f"k2={k2}")
         output.append(f"k2={k2}")
-    """
-    for i in range(1,size):
-        n = i+1
-        temp = 1/(1-Q[n])*vectMul(k,GetCol(W[n],-1))
-        k.append(temp)
-        print(f"k{n}={temp}")
-        output.append(f"k{n}={temp}")
+        print(k)
+        nextk +=1
+    # iterate to compute next 2 k values and append
+    for n in range(nextk,size+1,2):
+        kr = mmul(mmul([k],W[n]),inverse2x2(msub(Imatrix(2),Q[n])))
+        for x in kr[0]:
+            k.append(x)
+        print(f"k{n-1}, k{n}, ={kr}")
+        output.append(f"k{n-1}, k{n}, ={kr}")
+    
     alpha1 = 0
     for x in k:
         alpha1+=x
@@ -179,6 +184,6 @@ if in_path.is_file():
             for x in output:
                 file.write(str(x))
                 file.write("\n")
-    """
+
 else:
     raise Exception(f'input file in {in_path.absolute()} do not exist')
