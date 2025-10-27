@@ -7,7 +7,7 @@ def partition(A: list, p, r, performance: list=None):
     :param A: the list to be sorted
     :param p: the starting index of partitioning
     :param r: the end index of partitioning
-    :param performance: the array[comparison, exchange] to store key metrics including no. of comparisons and exchanges
+    :param performance: the array[comparison, exchange, [analysis message]] to store key metrics including no. of comparisons and exchanges
     :return: the index of pivot, analysis data including no. of comparisons and exchanges are made in place in Array performance
 
     A[r] is chosen as the pivot.
@@ -39,7 +39,7 @@ def partitionMO3(A: list, p, r, performance: list=None):
     :param A: the list to be sorted
     :param p: the starting index of partitioning
     :param r: the end index of partitioning
-    :param performance: the array[comparison, exchange] to store key metrics including no. of comparisons and exchanges
+    :param performance: the array[comparison, exchange, [analysis message]] to store key metrics including no. of comparisons and exchanges
     :return: the index of pivot, analysis data including no. of comparisons and exchanges are made in place in Array performance
 
     """
@@ -83,13 +83,13 @@ def partitionMO3(A: list, p, r, performance: list=None):
     return i + 1  # return the new index of the pivot
 
 #quicksort with reference to CLRS P184
-def quicksort(A, p=0, r=None, performance:list=None):
+def quicksort(A, p=0, r=None, performance:list=None, analyze = False):
     """
     sort the input list with quicksort using last element as pivot
     :param A: the list to be sorted
     :param p: the starting index of sorting
     :param r: the end index of sorting
-    :param performance: the array[comparison, exchange] to store key metrics including no. of comparisons and exchanges
+    :param performance: the array[comparison, exchange, [analysis message]] to store key metrics including no. of comparisons and exchanges
     :return: None, analysis data including no. of comparisons and exchanges are made in place in Array performance
     """
     if r is None:
@@ -97,17 +97,21 @@ def quicksort(A, p=0, r=None, performance:list=None):
     if p < r:
         # using original partition scheme
         q = partition(A, p, r,performance)
+        if analyze:
+            performance[2].append(f"list after partition run between index {p} and {r}")
+            performance[2].append([x for x in A])
+            performance[2].append(f"Pivot now at {q}")
         quicksort(A, p, q-1,performance)  # recursively sort the low side
         quicksort(A, q+1, r,performance)  # recursively sort the high side
 
 #quicksort with reference to CLRS P184, using median-of-three partition
-def quicksortMO3(A, p=0, r=None, performance:list=None):
+def quicksortMO3(A, p=0, r=None, performance:list=None,analyze = False):
     """
     sort the input list with quicksort using last element as pivot
     :param A: the list to be sorted
     :param p: the starting index of sorting
     :param r: the end index of sorting
-    :param performance: the array[comparison, exchange] to store key metrics including no. of comparisons and exchanges
+    :param performance: the array[comparison, exchange, [analysis message]] to store key metrics including no. of comparisons and exchanges
     :return: None, analysis data including no. of comparisons and exchanges are made in place in Array performance
     """
     if r is None:
@@ -115,6 +119,10 @@ def quicksortMO3(A, p=0, r=None, performance:list=None):
     if p < r:
         # using original partition scheme
         q = partitionMO3(A, p, r,performance)
+        if analyze:
+            performance[2].append(f"list after partition run between index {p} and {r}")
+            performance[2].append([x for x in A])
+            performance[2].append(f"Pivot now at {q}")
         quicksortMO3(A, p, q-1,performance)  # recursively sort the low side
         quicksortMO3(A, q+1, r,performance)  # recursively sort the high side
 

@@ -17,21 +17,19 @@ def numreader(in_path):
                 points.append(int(row[0]))
     return points
 
-def printout(sorted: list, comp, exch, output_f, source):
-    output_f.write(f'From {source}:'+"\n")
-    if len(sorted) <= 50:
-        output_f.write("The sorted elements are:"+"\n")
-        spacing = 10
-        i = 0
-        for x in sorted:
-            if i == 10:
-                output_f.write("\n")
-                i = 0
-            output_f.write(str(x) + " ")
-            i += 1
-        output_f.write("\n")
-    output_f.write(f'Total no. of sorted elements: {len(sorted)}'+"\n")
-    output_f.write(f'Total no. of comparison/exchanges make is {comp} and {exch}'+"\n")
+def writeResults(output_f, result):
+    """
+    obtain an output file and write the result list to the output file
+    example line:1,3
+    :param output_f :a file object for written to
+    :param result : the list containing the output data
+    :return: None
+    """
+    with (output_f.open('w') as file):
+        for x in result:
+            file.write(str(x))
+            file.write("\n")
+    
 
 # Testing
 if __name__ == "__main__":
