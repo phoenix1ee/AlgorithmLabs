@@ -22,8 +22,16 @@ def EdmondKarp(adj,F,s,t):
             af = float('inf')
             for i in range(len(path)-1):
                 af = min(af, F[path[i]][path[i+1]][1]-F[path[i]][path[i+1]][0])
+
             #update total flow, residual capacity and add reverse edge
             for i in range(len(path)-1):
+                #add reverse edge to adjacency list
+                if path[i+1] not in adj:
+                    adj.update({path[i+1]:[path[i]]})
+                else:
+                    if path[i] not in adj[path[i+1]]:
+                        adj[path[i+1]].append(path[i])
+                #updated flow
                 F[path[i]][path[i+1]][0] += af
                 if path[i+1] in F:
                     if path[i] in F[path[i+1]]:

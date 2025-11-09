@@ -63,6 +63,7 @@ def BFS(adj,F,s,t):
         G.update({keys:{"d":float('inf'),"pre":None}})
 
     if s not in G or t not in G:
+        print("input vertex not found")
         return None
 
     visited = set()
