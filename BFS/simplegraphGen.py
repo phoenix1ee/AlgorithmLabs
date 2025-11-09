@@ -10,19 +10,19 @@ print(f'V:{V}')
 output = []
 
 for i in range(size[0]):
-    Vcopy = [x for x in V if x != i+1]
-    adjacent = random.randint(1,size[0]-1)
+    Vcopy = [x for x in V]
+    adjacent = random.randint(1,size[0])
     for j in range(adjacent):
         output.append((i+1,Vcopy.pop(random.randint(0,len(Vcopy)-1))))
 
-out_path = Path(curdir + "\\bipartitegraph" + ".txt")
+out_path = Path(curdir + "\\simplegraph" + ".txt")
 output_f = out_path.open('w')
 for k in output:
     output_f.write(f'{k[0]},{k[1]}\n')
 output_f.close()
 
 readin=dict()
-in_path = Path(curdir + "\\bipartitegraph" + ".txt")
+in_path = Path(curdir + "\\simplegraph" + ".txt")
 with open(in_path, mode='r', encoding='utf-8', newline='') as file:
     reader = csv.reader(file, delimiter=',')  # Change delimiter if needed
     for row in reader:
