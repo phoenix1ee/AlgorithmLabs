@@ -1,4 +1,4 @@
-# Shun Fai Lee Programming Assignment 3
+# Analysis on killer sequence of quicksort using median of 3 pivot/ worst case scenarios
 
 This python package is developed on and expected to be run in CLI with python interpreter 3.12 or above.
 

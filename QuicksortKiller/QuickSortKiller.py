@@ -1,3 +1,4 @@
+#generate kiiler sequence of quicksort using median of three pivot
 def median_of_three_killer(n):
     output = [0]*n
     output[0]=1

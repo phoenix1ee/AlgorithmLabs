@@ -1,4 +1,4 @@
-# Shun Fai Lee Programming Assignment 2
+# Turing Machine Simulation
 
 This python package is developed on and expected to be run in CLI with python interpreter 3.12 or above.
 
