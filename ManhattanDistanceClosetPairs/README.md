@@ -1,8 +1,8 @@
-# Shun Fai Lee Programming Assignment 1
+# m pairs Closet Manhattan Distance Algo
 
 This python package is developed on and expected to be run in CLI with python interpreter 3.12 or above.
 
-It accepted user input in the form of a text file containing lines of coordinates, or a file containing a list of full file path
+This algorithm is for calculate, sort and return manhattan distance of closet m pairs of coordinates. It accepted user input in the form of a text file containing lines of coordinates, or a file containing a list of full file path
 and output statistics to console and/or outputing result list, to the same directory as the input file, by passing optional arguments. Statistics information includes file names, data size, m size, processing time(ns). The module also support to repeat for multiple times optionally for better accuracy of statistics, with the appropriate argument passed. 
 
 ## How to download and run:

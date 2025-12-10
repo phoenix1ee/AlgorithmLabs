@@ -9,6 +9,7 @@ from time import time_ns
 from manhattan.readPoints import readPoints
 from manhattan.writeResults import writeResults
 from manhattan.manhattan import Manhattan
+from manhattan.manhattan_improvement import AcceleratedManhattan
 
 # use the Argument parser to define compulsory and optional arguments
 this_parser = argparse.ArgumentParser(description ='calculate manhattan distance and return closet m pairs')
@@ -53,7 +54,7 @@ if in_path.is_file():
         part2_time = 0
         for i in range(args.repeat):
             start_time = time_ns()
-            result, mid_time = Manhattan(coordinate,int(args.m),(analysis if i==0 else False))
+            result, mid_time = AcceleratedManhattan(coordinate,int(args.m),(analysis if i==0 else False))
             end_time = time_ns()
             part1_time += mid_time - start_time
             part2_time += end_time - mid_time
@@ -110,7 +111,7 @@ if in_path.is_file():
                     part2_time = 0
                     for i in range(args.repeat):
                         start_time = time_ns()
-                        result, mid_time = Manhattan(coordinate,int(args.m),(analysis if i==0 else False))
+                        result, mid_time = AcceleratedManhattan(coordinate,int(args.m),(analysis if i==0 else False))
                         end_time = time_ns()
                         part1_time += mid_time - start_time
                         part2_time += end_time - mid_time

@@ -1,11 +1,10 @@
-#from manhattan.merge_sort import merge_sort
+from manhattan.merge_sort import merge_sort
 import math
 from pathlib import Path
 from time import time_ns
-from merge_sort import merge_sort
-from readPoints import readPoints
+from manhattan.readPoints import readPoints
 
-def Manhattan(P:list,m:int,analysis=False):
+def AcceleratedManhattan(P:list,m:int,analysis=False):
     """Calculate the manhattan distance of points in the input list P
     and output a list containing the closet m pairs of points.
 
@@ -16,8 +15,6 @@ def Manhattan(P:list,m:int,analysis=False):
 	"""
     #find the length of input array
     n = len(P)
-    #calculate no. of combinations or pairs
-    combination = math.comb(n,2)
     #declare empty array
     Distance = list()
     for i in range(math.floor(math.log2(2000))+1):
@@ -49,9 +46,9 @@ def Manhattan(P:list,m:int,analysis=False):
                 i+=1
             print("only 1st 10 pairs and manhattan distance are printed")
         else:
-            for x in Distance:
-                for y in x:
-                    print(f'{y[0]} , {y[1]} , {y[2]}')
+            for partition in Distance:
+                for pair in partition:
+                    print(f'{pair[0]} , {pair[1]} , {pair[2]}')
     #call CLRS page 39 merge-sort, modified for the data structure
     Result=list()
     PartitionID = 0
@@ -63,14 +60,19 @@ def Manhattan(P:list,m:int,analysis=False):
             Result.append(Distance[PartitionID][j][:2])
             needed-=1
         PartitionID+=1
-    return Result
+    return Result,mid_time
 
 
 # Testing
 if __name__ == "__main__":
-    test1=[[1,2],[1,3],[3,1],[4,4]]
-    test2=[[1,1],[1,2],[2,1],[2,2],[9,9],[9,10],[10,9],[10,10]]
-    infile = Path('datafile/rand6400.txt')
-    coo=readPoints(infile)
-    result = Manhattan(coo,100,True)
-    print(result)
+    infile = Path('datafile/blackBox6400.txt')
+    coordinates=readPoints(infile)
+    m = 8000
+    start_time = time_ns()
+    result,mid_time = AcceleratedManhattan(coordinates,m,True)
+    end_time = time_ns()
+    part1_time = mid_time - start_time
+    part2_time = end_time - mid_time
+    print("statistics:")
+    print("file, data size, m size, part1 processing time(ns), part2 processing time(ns)")
+    print(infile, len(coordinates), m, "%.2f" % part1_time, "%.2f" % part2_time, sep=",")
